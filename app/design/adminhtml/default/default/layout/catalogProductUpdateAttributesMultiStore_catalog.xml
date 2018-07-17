@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_product_action_attribute_multistore_edit>
+        <reference name="left">
+            <block type="adminhtml/catalog_product_edit_action_attribute_tabs" name="attributes_tabs">
+                <block type="catalogProductUpdateAttributesMultiStore/catalog_product_edit_action_attribute_tab_attributes" name="tab_attributes"/>
+                <action method="addTab"><name>attributes</name><block>tab_attributes</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="adminhtml/catalog_product_edit_action_attribute" name="attribute" template="catalog/product/edit/action/attribute.phtml" />
+        </reference>
+    </adminhtml_catalog_product_action_attribute_multistore_edit>
+</layout>

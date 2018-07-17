@@ -27,6 +27,13 @@
                 </observers>
             </adminhtml_catalog_product_grid_prepare_massaction>
         </events>
+        <layout>
+            <updates>
+                <catalogProductUpdateAttributesMultiStore>
+                    <file>catalogProductUpdateAttributesMultiStore_catalog.xml</file>
+                </catalogProductUpdateAttributesMultiStore>
+            </updates>
+        </layout>
     </adminhtml>
     <default>
         <catalog>
@@ -36,6 +43,11 @@
         </catalog>
     </default>
     <global>
+        <blocks>
+            <catalogProductUpdateAttributesMultiStore>
+                <class>Max_CatalogProductUpdateAttributesMultiStore_Block</class>
+            </catalogProductUpdateAttributesMultiStore>
+        </blocks>
         <helpers>
             <catalogProductUpdateAttributesMultiStore>
                 <class>Max_CatalogProductUpdateAttributesMultiStore_Helper</class>
