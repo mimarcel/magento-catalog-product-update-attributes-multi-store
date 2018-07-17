@@ -5,6 +5,17 @@
             <version>0.0.1</version>
         </Max_CatalogProductUpdateAttributesMultiStore>
     </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Max_CatalogProductUpdateAttributesMultiStore before="Mage_Adminhtml">Max_CatalogProductUpdateAttributesMultiStore_Adminhtml</Max_CatalogProductUpdateAttributesMultiStore>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <adminhtml>
         <events>
             <adminhtml_catalog_product_grid_prepare_massaction>
