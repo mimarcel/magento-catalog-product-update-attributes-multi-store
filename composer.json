@@ -1,0 +1,5 @@
+{
+  "name": "mimarcel/magento-catalog-product-update-attributes-multi-store",
+  "type": "magento-module",
+  "require": {}
+}
