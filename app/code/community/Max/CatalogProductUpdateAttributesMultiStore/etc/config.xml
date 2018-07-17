@@ -5,16 +5,28 @@
             <version>0.0.1</version>
         </Max_CatalogProductUpdateAttributesMultiStore>
     </modules>
+    <adminhtml>
+        <events>
+            <adminhtml_catalog_product_grid_prepare_massaction>
+                <observers>
+                    <catalogProductUpdateAttributesMultiStore_observer>
+                        <class>catalogProductUpdateAttributesMultiStore/observer</class>
+                        <method>addButtonsInProductsGrid</method>
+                    </catalogProductUpdateAttributesMultiStore_observer>
+                </observers>
+            </adminhtml_catalog_product_grid_prepare_massaction>
+        </events>
+    </adminhtml>
     <global>
         <helpers>
-            <customerCreateFromOrder>
+            <catalogProductUpdateAttributesMultiStore>
                 <class>Max_CatalogProductUpdateAttributesMultiStore_Helper</class>
-            </customerCreateFromOrder>
+            </catalogProductUpdateAttributesMultiStore>
         </helpers>
         <models>
-            <customerCreateFromOrder>
+            <catalogProductUpdateAttributesMultiStore>
                 <class>Max_CatalogProductUpdateAttributesMultiStore_Model</class>
-            </customerCreateFromOrder>
+            </catalogProductUpdateAttributesMultiStore>
         </models>
     </global>
 </config>
