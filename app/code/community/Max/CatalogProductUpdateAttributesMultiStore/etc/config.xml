@@ -17,6 +17,13 @@
             </adminhtml_catalog_product_grid_prepare_massaction>
         </events>
     </adminhtml>
+    <default>
+        <catalog>
+            <update_attributes_multi_store>
+                <disable_core_update_attributes>1</disable_core_update_attributes>
+            </update_attributes_multi_store>
+        </catalog>
+    </default>
     <global>
         <helpers>
             <catalogProductUpdateAttributesMultiStore>
