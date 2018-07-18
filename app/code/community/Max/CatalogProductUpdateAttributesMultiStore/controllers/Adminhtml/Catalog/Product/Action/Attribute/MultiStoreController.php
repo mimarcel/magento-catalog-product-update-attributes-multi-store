@@ -78,6 +78,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Adminhtml_Catalog_Product_Act
                     foreach ($storesValues as $storeId => $productsValues) {
                         foreach ($productsValues as $productId => $productValue) {
                             if ($attribute->getBackendType() == 'datetime') {
+                                // @todo Check why is this needed? copied from core parent method
                                 if (!empty($productValue)) {
                                     $filterInput    = new Zend_Filter_LocalizedToNormalized(array(
                                         'date_format' => $dateFormat

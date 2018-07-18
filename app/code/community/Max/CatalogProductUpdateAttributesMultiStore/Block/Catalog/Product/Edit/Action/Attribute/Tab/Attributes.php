@@ -3,10 +3,7 @@
 class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Action_Attribute_Tab_Attributes
     extends Mage_Adminhtml_Block_Catalog_Product_Edit_Action_Attribute_Tab_Attributes
 {
-    protected $_products = null;
-    protected $_stores = null;
-
-    /**
+      /**
      * Set Fieldset fields to Form
      *
      * Note: Same as parent method, but for every attribute we need to generate p*s fields instead of just 1 field
@@ -33,8 +30,10 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
             }
 
             $elements = array();
-            foreach (array_keys($this->_getProducts()) as $productId) {
-                foreach (array_keys($this->_getStores()) as $storeId) {
+            $stores = $this->_getStores($attribute);
+            $products = $this->_getProducts();
+            foreach (array_keys($products) as $productId) {
+                foreach (array_keys($stores) as $storeId) {
                     $fieldId = "{$attribute->getAttributeCode()}_{$storeId}_{$productId}";
                     $fieldName = "{$attribute->getAttributeCode()}[{$storeId}][{$productId}]";
                     $element = $fieldset->addField($fieldId, $fieldType, array(
@@ -93,8 +92,8 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 
             // @todo Create block without `new`
             $matrix = new Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Action_Attribute_Tab_Attributes_Form_Element_ProductsStoresMatrix(
-                $this->_getProducts(),
-                $this->_getStores(),
+                $products,
+                $stores,
                 $elements,
                 array(
                     'label' => $attribute->getFrontend()->getLabel(),
@@ -136,21 +135,19 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 
     protected function _getProducts()
     {
-        if ($this->_products === null) {
-            $products = $this->_getHelper()->getProductIds();
-            if (!is_array($products)) {
-                Mage::throwException('Invalid products variable');
-            }
-
-            $this->_products = array();
-            foreach ($products as $product) {
-                $this->_products[$product] = Mage::getResourceModel('catalog/product')
-                    ->getAttributeRawValue($product, 'sku', 0);
-                // @todo improve retrieving name in one query (hint: use collection)
-            }
+        $productsIds = $this->_getHelper()->getProductIds();
+        if (!is_array($productsIds)) {
+            Mage::throwException('Invalid products variable');
         }
 
-        return $this->_products;
+        $products = array();
+        foreach ($productsIds as $productId) {
+            $products[$productId] = Mage::getResourceModel('catalog/product')
+                ->getAttributeRawValue($productId, 'sku', 0);
+            // @todo improve retrieving name in one query (hint: use collection)
+        }
+
+        return $products;
     }
 
     /**
@@ -173,7 +170,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
         $productsValues = $resource->getValues(
             array_keys($this->_getProducts()),
             $attributes,
-            array_keys($this->_getStores())
+            array_keys(Mage::app()->getStores(true))
         );
 
         $values = array();
@@ -184,21 +181,35 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
         return $values;
     }
 
-    protected function _getStores()
+    /**
+     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute
+     *
+     * @return array
+     */
+    protected function _getStores($attribute)
     {
-        // @todo When attribute is per scope website, show only a website value
-        // @todo When attribute is per scope global, show only a global value
-        // @todo Show attribute scope in frontend
-        if ($this->_stores === null) {
-            $this->_stores = array();
+        if ($attribute->isScopeGlobal()) {
+            $storesIds = array(
+                Mage_Core_Model_App::ADMIN_STORE_ID => $this->__('Global'),
+            );
+        } elseif ($attribute->isScopeWebsite()) {
+            $storesIds = array();
+            foreach (Mage::app()->getWebsites(true) as $website) {
+                /** @var Mage_Core_Model_Website $website */
+                $storesIds[$website->getDefaultStore()->getId()] = $website->getId()
+                    ? $website->getName()
+                    : $this->__('Default');
+            }
+        } else {
+            $storesIds = array();
             foreach (Mage::app()->getStores(true) as $store) {
-                $this->_stores[$store->getId()] = $store->getId()
+                $storesIds[$store->getId()] = $store->getId()
                     ? $store->getName()
                     : $this->__('Default');
             }
         }
 
-        return $this->_stores;
+        return $storesIds;
     }
 
     /**
