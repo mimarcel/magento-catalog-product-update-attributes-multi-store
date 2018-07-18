@@ -18,7 +18,12 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
     {
         $this->_addElementTypes($fieldset);
         $attributes = $this->_filterAttributes($attributes, $exclude);
-        $values = $this->_loadProductsValues($attributes);
+        $products = $this->_getProducts();
+        $values = $this->_loadProductsValues(
+            $attributes,
+            array_keys($products),
+            array_keys(Mage::app()->getStores(true))
+        );
 
         foreach ($attributes as $attribute) {
             $inputType = $attribute->getFrontend()->getInputType();
@@ -31,7 +36,6 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 
             $elements = array();
             $stores = $this->_getStores($attribute);
-            $products = $this->_getProducts();
             foreach (array_keys($products) as $productId) {
                 foreach (array_keys($stores) as $storeId) {
                     $fieldId = "{$attribute->getAttributeCode()}_{$storeId}_{$productId}";
@@ -160,17 +164,19 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 
     /**
      * @param Mage_Catalog_Model_Resource_Eav_Attribute[] $attributes
+     * @param $productsIds
+     * @param $storesIds
      *
      * @return array
      */
-    protected function _loadProductsValues($attributes)
+    protected function _loadProductsValues($attributes, $productsIds, $storesIds)
     {
         /** @var Max_CatalogProductUpdateAttributesMultiStore_Model_Resource_Catalog_Product_Attributes $resource */
         $resource = Mage::getResourceSingleton('catalogProductUpdateAttributesMultiStore/catalog_product_attributes');
         $productsValues = $resource->getValues(
-            array_keys($this->_getProducts()),
+            $productsIds,
             $attributes,
-            array_keys(Mage::app()->getStores(true))
+            $storesIds
         );
 
         $values = array();
