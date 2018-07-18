@@ -10,7 +10,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
      * Set Fieldset fields to Form
      *
      * Note: Same as parent method, but for every attribute we need to generate p*s fields
-     * where    a = the number of products
+     * where    p = the number of products
      *          s = the number of stores
      */
     protected function _setFieldset($attributes, $fieldset, $exclude = array())
@@ -86,9 +86,12 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
                     $this->_getProducts(),
                     $this->_getStores(),
                     $elements,
-                    $attribute->getFrontend()->getLabel()
+                    array(
+                        'label' => $attribute->getFrontend()->getLabel(),
+                        'class' => 'type_' . $fieldType,
+                    )
                 );
-                $matrix->setId($attribute->getAttributeCode());
+                $matrix->setId('matrix_' . $attribute->getAttributeCode());
                 $fieldset->addElement($matrix);
             }
         }
@@ -113,10 +116,15 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 
     protected function _getStores()
     {
+        // @todo When attribute is per scope website, show only a website value
+        // @todo When attribute is per scope global, show only a global value
+        // @todo Show attribute scope in frontend
         if ($this->_stores === null) {
             $this->_stores = array();
             foreach (Mage::app()->getStores(true) as $store) {
-                $this->_stores[$store->getId()] = $store->getId() ? $store->getName() : 'Default';
+                $this->_stores[$store->getId()] = $store->getId()
+                    ? $store->getName()
+                    : $this->__('Default');
             }
         }
 
@@ -141,12 +149,22 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
         return parent::_afterToHtml($html)
             . <<<HTML
 <style>
-.products-stores-matrix input, textarea {
+.products-stores-matrix {
+    border-spacing: 0;
+}
+
+.products-stores-matrix td {
+    border-spacing: 0;
+    width: 130px;
+}
+
+.products-stores-matrix input, .products-stores-matrix textarea, .products-stores-matrix select {
     padding: 0;
     font-size: 16px;
     margin: 0;
-    width: 100%;
-    height: 100%;
+    height: 20px;
+    width: 130px;
+    border: 1px solid #f3f0f0;
 }
 </style>
 HTML;

@@ -10,23 +10,26 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
     protected $elements;
     /** @var string */
     protected $label;
+    /** @var string */
+    protected $class;
 
     public function __construct(
         array $rows, array $columns,
         $elements,
-        $label
+        $config
     ) {
         parent::__construct(array());
 
         $this->rows = $rows;
         $this->columns = $columns;
         $this->elements = $elements;
-        $this->label = $label;
+        $this->label = isset($config['label']) ? $config['label'] : '';
+        $this->class = isset($config['class']) ? $config['class'] : '';
     }
 
     public function getElementHtml()
     {
-        $html = '<table class="products-stores-matrix">';
+        $html = '<table id="' . $this->getId() . '" class="products-stores-matrix ' . $this->class . '">';
         $html .= $this->_getElementHtmlHeaderRow();
         $html .= $this->_getElementHtmlRows();
 
