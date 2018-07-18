@@ -188,6 +188,9 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
      */
     protected function _getStores($attribute)
     {
+        // Call getBackend to make sure that scope is updated, e.g. see Mage_Catalog_Model_Product_Attribute_Backend_Price::setScope
+        $attribute->getBackend();
+
         if ($attribute->isScopeGlobal()) {
             $storesIds = array(
                 Mage_Core_Model_App::ADMIN_STORE_ID => $this->__('Global'),
