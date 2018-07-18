@@ -241,6 +241,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
 <style>
 .products-stores-matrix {
     border-spacing: 0;
+    margin-bottom: 20px;
 }
 
 .products-stores-matrix td {
