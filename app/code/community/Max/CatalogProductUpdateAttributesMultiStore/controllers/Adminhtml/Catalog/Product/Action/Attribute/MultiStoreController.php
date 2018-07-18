@@ -18,6 +18,47 @@ class Max_CatalogProductUpdateAttributesMultiStore_Adminhtml_Catalog_Product_Act
         $this->renderLayout();
     }
 
+    public function validateAction()
+    {
+        $response = new Varien_Object();
+        $response->setError(false);
+        $attributesData = $this->getRequest()->getParam('attributes', array());
+        $data = new Varien_Object();
+
+        try {
+            if ($attributesData) {
+                foreach ($attributesData as $attributeCode => $storesValues) {
+                    $attribute = Mage::getSingleton('eav/config')
+                        ->getAttribute('catalog_product', $attributeCode);
+                    if (!$attribute->getAttributeId()) {
+                        unset($attributesData[$attributeCode]);
+                        continue;
+                    }
+                    foreach ($storesValues as $storeId => $productsValues) {
+                        foreach ($productsValues as $value) {
+                            $data->setData($attributeCode, $value);
+                            $attribute->getBackend()->validate($data);
+                        }
+                    }
+                }
+            }
+        } catch (Mage_Eav_Model_Entity_Attribute_Exception $e) {
+            $response->setError(true);
+            $response->setAttribute($e->getAttributeCode());
+            $response->setMessage($e->getMessage());
+        } catch (Mage_Core_Exception $e) {
+            $response->setError(true);
+            $response->setMessage($e->getMessage());
+        } catch (Exception $e) {
+            $this->_getSession()->addException($e, $this->__('An error occurred while updating the product(s) attributes.'));
+            $this->_initLayoutMessages('adminhtml/session');
+            $response->setError(true);
+            $response->setMessage($this->getLayout()->getMessagesBlock()->getGroupedHtml());
+        }
+
+        $this->getResponse()->setBody($response->toJson());
+    }
+
     /**
      * Validate selection of products for massupdate
      */
