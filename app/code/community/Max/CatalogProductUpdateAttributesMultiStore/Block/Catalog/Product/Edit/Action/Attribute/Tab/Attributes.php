@@ -102,6 +102,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
                 )
             );
             $matrix->setId('matrix_' . $attribute->getAttributeCode());
+            $matrix->setNoSpan(true);
             $fieldset->addElement($matrix);
         }
     }
