@@ -22,3 +22,7 @@ composer require mimarcel/magento-catalog-product-update-attributes-multi-store:
     * README.md
     * composer.json
     * modman
+
+## Notes
+- This module does add a new option `Update Attributes Multi Store` and disables by default the core functionality for `Update Attributes` using `catalog/update_attributes_multi_store/disable_core_update_attributes` configuration flag.
+- This module is not finished. Check todos in the code.
