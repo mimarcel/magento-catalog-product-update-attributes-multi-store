@@ -145,7 +145,7 @@ class Max_CatalogProductUpdateAttributesMultiStore_Block_Catalog_Product_Edit_Ac
             $this->_products = array();
             foreach ($products as $product) {
                 $this->_products[$product] = Mage::getResourceModel('catalog/product')
-                    ->getAttributeRawValue($product, 'sku');
+                    ->getAttributeRawValue($product, 'sku', 0);
                 // @todo improve retrieving name in one query (hint: use collection)
             }
         }
