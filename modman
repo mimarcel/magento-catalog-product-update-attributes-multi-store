@@ -1,2 +1,9 @@
+app/design/adminhtml/default/default/layout/catalogProductUpdateAttributesMultiStore_catalog.xml app/design/adminhtml/default/default/layout/catalogProductUpdateAttributesMultiStore_catalog.xml
 app/etc/modules/Max_CatalogProductUpdateAttributesMultiStore.xml app/etc/modules/Max_CatalogProductUpdateAttributesMultiStore.xml
 app/code/community/Max/CatalogProductUpdateAttributesMultiStore/etc/config.xml app/code/community/Max/CatalogProductUpdateAttributesMultiStore/etc/config.xml
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Model/Observer.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Model/Observer.php
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Model/Resource/Catalog/Product/Attributes.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Model/Resource/Catalog/Product/Attributes.php
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/controllers/Adminhtml/Catalog/Product/Action/Attribute/MultiStoreController.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/controllers/Adminhtml/Catalog/Product/Action/Attribute/MultiStoreController.php
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Helper/Data.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Helper/Data.php
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Block/Catalog/Product/Edit/Action/Attribute/Tab/Attributes.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Block/Catalog/Product/Edit/Action/Attribute/Tab/Attributes.php
+app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Block/Catalog/Product/Edit/Action/Attribute/Tab/Attributes/Form/Element/ProductsStoresMatrix.php app/code/community/Max/CatalogProductUpdateAttributesMultiStore/Block/Catalog/Product/Edit/Action/Attribute/Tab/Attributes/Form/Element/ProductsStoresMatrix.php
