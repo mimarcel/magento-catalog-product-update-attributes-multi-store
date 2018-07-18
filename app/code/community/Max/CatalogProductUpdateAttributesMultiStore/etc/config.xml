@@ -56,7 +56,11 @@
         <models>
             <catalogProductUpdateAttributesMultiStore>
                 <class>Max_CatalogProductUpdateAttributesMultiStore_Model</class>
+                <resourceModel>catalogProductUpdateAttributesMultiStore_resource</resourceModel>
             </catalogProductUpdateAttributesMultiStore>
+            <catalogProductUpdateAttributesMultiStore_resource>
+                <class>Max_CatalogProductUpdateAttributesMultiStore_Model_Resource</class>
+            </catalogProductUpdateAttributesMultiStore_resource>
         </models>
     </global>
 </config>
